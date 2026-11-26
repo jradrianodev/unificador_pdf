@@ -1,0 +1,21 @@
+# Arquivos PDF (para evitar subir contratos ou documentos pessoais/confidenciais ao repositório)
+*.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+.venv/
+env/
+venv/
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
