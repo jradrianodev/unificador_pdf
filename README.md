@@ -70,31 +70,61 @@ python unificador_desktop.py
 
 ---
 
-## 🤖 Uso com Assistentes de IA (Claude, ChatGPT & Agentes de Código)
+## 🤖 Uso com Assistentes de IA (Antigravity, Claude & ChatGPT)
 
-Se você utiliza **Claude (Claude Code, Desktop ou API)**, **ChatGPT (Code Interpreter / Análise de Dados)** ou agentes autônomos, você pode delegar a unificação e curadoria de PDFs diretamente para eles.
+O arquivo `unificador_desktop.py` foi construído com arquitetura híbrida (**GUI + CLI + Módulo Python**). Isso significa que enquanto humanos podem usá-lo com interface gráfica de janelas, assistentes de IA e agentes autônomos podem acioná-lo diretamente sem abrir janelas.
 
-### 1. Com o Claude (Claude Code / Agentes de Terminal)
-O Claude pode inspecionar o repositório, executar a interface desktop ou chamar a lógica do `unificador_desktop.py` diretamente:
+### 1. Com o Antigravity (Google DeepMind)
+O Antigravity pode chamar a ferramenta de duas formas no seu fluxo de trabalho:
 
-**Exemplo de prompt para o Claude:**
-> *"Abra os arquivos PDF desta pasta, organize-os em ordem cronológica dos aditivos e unifique em um arquivo final gerando os marcadores de sumário."*
+- **Via Terminal / Shell Tool:**
+  ```powershell
+  python unificador_desktop.py --dir "." --output "documento_unificado.pdf"
+  ```
+- **Via Importação Direta em Scripts Python:**
+  ```python
+  from unificador_desktop import unificar_pdfs, ordenar_arquivos
 
-O Claude lerá a estrutura dos arquivos, manterá a ordem correta e executará a unificação localmente sem enviar documentos confidenciais para fora da sua máquina.
+  arquivos = ordenar_arquivos(["contrato.pdf", "contrato_ad1.pdf", "contrato_ad2.pdf"])
+  resultado = unificar_pdfs(arquivos, caminho_saida="resultado.pdf", criar_sumario=True)
+  print(f"Gerado: {resultado['arquivo_saida']} com {resultado['total_paginas']} páginas.")
+  ```
 
-### 2. Com o ChatGPT (Code Interpreter / Análise de Dados)
-Ao subir múltiplos PDFs para uma conversa no ChatGPT com o recurso de análise de código ativado:
+**Prompt de exemplo para o Antigravity:**
+> *"Antigravity, use o `unificador_desktop.py` para juntar todos os PDFs desta pasta em ordem cronológica de aditivos, gerando o sumário como 'contrato_completo.pdf'."*
 
-**Exemplo de prompt para o ChatGPT:**
-> *"Junte todos os arquivos PDF que enviei em um único documento consolidado, aplicando ordenação numérica natural e gerando um sumário clicável para download."*
+---
 
-O ChatGPT executará o ambiente em sandbox dele utilizando a mesma lógica de ordenação e geração de sumário, disponibilizando o botão de download direto na conversa.
+### 2. Com o Claude (Claude Code / Terminal / API)
+O Claude Code pode executar comandos de terminal nativamente para gerenciar seus arquivos e executar a ferramenta:
 
-### 3. Em Pipelines de Automação e Agentes (Function Calling / MCP)
-A classe e a lógica do `unificador_desktop.py` (usando PyMuPDF) podem ser facilmente reaproveitadas como uma ferramenta (*tool*) para agentes:
-- **Entrada:** Lista de caminhos de arquivos PDF ou caminho da pasta.
-- **Processamento:** Ordenação natural, merge sequencial e injeção de sumário via PyMuPDF.
-- **Saída:** Arquivo consolidado (`.pdf`) salvo e otimizado no disco.
+**Comando direto via CLI que o Claude executa:**
+```bash
+python unificador_desktop.py --dir "/caminho/dos/documentos" -o "saida.pdf"
+```
+
+**Prompt de exemplo para o Claude:**
+> *"Claude, examine os PDFs desta pasta e execute o script `unificador_desktop.py` passando os arquivos em ordem numérica para gerar um único PDF unificado."*
+
+---
+
+### 3. Com o ChatGPT (Code Interpreter / Análise Avançada de Dados)
+Ao subir seus arquivos e o `unificador_desktop.py` em uma sessão de chat do ChatGPT com suporte a código:
+
+**Prompt de exemplo para o ChatGPT:**
+> *"Execute a função `unificar_pdfs()` do `unificador_desktop.py` com os PDFs que acabei de enviar, criando o sumário automático com o nome de cada arquivo e disponibilize o link para download."*
+
+---
+
+### 🛠️ Parâmetros da Linha de Comando (CLI para Agentes)
+
+| Parâmetro | Descrição | Exemplo |
+| :--- | :--- | :--- |
+| `-d`, `--dir` | Caminho do diretório contendo os PDFs | `--dir "./documentos"` |
+| `arquivos` | Lista posicional de PDFs específicos | `doc1.pdf doc2.pdf doc3.pdf` |
+| `-o`, `--output` | Nome ou caminho do arquivo consolidado | `-o "final.pdf"` |
+| `--no-sort` | Desativa a ordenação natural numérica | `--no-sort` |
+| `--no-toc` | Desativa a criação de marcadores/sumário | `--no-toc` |
 
 ---
 
