@@ -13,10 +13,10 @@
 
 A maioria dos serviços online (como iLovePDF, Smallpdf) impõe restrições severas: limite de 2 a 3 tarefas por dia, limites de tamanho (MB) ou exigência de planos pagos. Além disso, enviar documentos corporativos, contratos e dados sigilosos para servidores de terceiros pode violar políticas de compliance e LGPD.
 
-Este repositório oferece **duas abordagens complementares e 100% locais**:
+Este repositório oferece **duas soluções complementares e 100% locais**:
 
-1. **Aplicação Web no Navegador (`unificador_pdf.html`)**: Não precisa instalar nada. Basta dar dois cliques e usar no Chrome, Edge ou Firefox.
-2. **Aplicação Desktop / Script Python (`unificador_desktop.py` e `merge_pdfs.py`)**: Interface gráfica nativa ou script automatizado usando o motor de alta velocidade do PyMuPDF com geração automática de sumário/marcadores.
+1. **Aplicação Web no Navegador (`unificador_pdf.html`)**: Não precisa instalar nada. Basta dar dois cliques e usar no Chrome, Edge ou Firefox com suporte a *drag & drop*.
+2. **Aplicação Desktop Nativa (`unificador_desktop.py`)**: Interface gráfica nativa para Windows/Linux/macOS usando o motor de alta performance do PyMuPDF, com geração automática de sumário e marcadores.
 
 ---
 
@@ -47,7 +47,7 @@ Ideal para uso rápido no dia a dia ou para compartilhar com colegas de equipe q
 
 ### Opção 2: Aplicativo Desktop (Interface Gráfica com Python)
 
-Ideal para quem busca máxima performance com grandes volumes de páginas.
+Ideal para quem busca máxima performance com grandes volumes de páginas ou quer processar uma pasta inteira com um clique.
 
 #### Pré-requisitos
 - Python 3.8 ou superior instalado.
@@ -64,48 +64,37 @@ python unificador_desktop.py
 * **Recursos da interface:**
   - Botão **➕ Adicionar PDFs** (seleção múltipla).
   - Botão **📁 Adicionar Pasta** (carrega todos os PDFs de um diretório de uma só vez).
-  - Botão **🔢 Ordenação Inteligente**.
-  - Checkbox para ativar/desativar a criação de marcadores/sumário.
-
----
-
-### Opção 3: Script Automatizado via Linha de Comando (CLI)
-
-Se você precisa automatizar a junção de arquivos de forma programática ou em esteiras de rotina:
-
-```bash
-python merge_pdfs.py
-```
-
-Você pode editar a lista de arquivos e o nome de saída diretamente no script `merge_pdfs.py`.
+  - Botão **🔢 Ordenação Inteligente** (ordena naturalmente por números nos nomes).
+  - Botões **▲ Subir** e **▼ Descer** para ajuste manual de posição.
+  - Checkbox para ativar/desativar a criação de marcadores/sumário clicáveis no PDF final.
 
 ---
 
 ## 🤖 Uso com Assistentes de IA (Claude, ChatGPT & Agentes de Código)
 
-Se você utiliza **Claude (Claude Code, Desktop ou API)**, **ChatGPT (Code Interpreter / Advanced Data Analysis)** ou agentes autônomos, você pode delegar a unificação e curadoria de PDFs diretamente para eles.
+Se você utiliza **Claude (Claude Code, Desktop ou API)**, **ChatGPT (Code Interpreter / Análise de Dados)** ou agentes autônomos, você pode delegar a unificação e curadoria de PDFs diretamente para eles.
 
 ### 1. Com o Claude (Claude Code / Agentes de Terminal)
-O Claude pode inspecionar o diretório, detectar os PDFs automaticamente e executar a unificação em um único comando:
+O Claude pode inspecionar o repositório, executar a interface desktop ou chamar a lógica do `unificador_desktop.py` diretamente:
 
 **Exemplo de prompt para o Claude:**
-> *"Leia todos os PDFs nesta pasta, organize-os em ordem cronológica/numérica dos aditivos e execute o script `merge_pdfs.py` para consolidar tudo com marcadores de sumário no arquivo final."*
+> *"Abra os arquivos PDF desta pasta, organize-os em ordem cronológica dos aditivos e unifique em um arquivo final gerando os marcadores de sumário."*
 
-O Claude lerá a estrutura dos arquivos, ajustará os nomes dos marcadores se necessário e rodará a execução localmente sem enviar documentos para fora da sua máquina.
+O Claude lerá a estrutura dos arquivos, manterá a ordem correta e executará a unificação localmente sem enviar documentos confidenciais para fora da sua máquina.
 
 ### 2. Com o ChatGPT (Code Interpreter / Análise de Dados)
 Ao subir múltiplos PDFs para uma conversa no ChatGPT com o recurso de análise de código ativado:
 
 **Exemplo de prompt para o ChatGPT:**
-> *"Use o script `merge_pdfs.py` (ou a biblioteca PyMuPDF/pypdf) para juntar todos os arquivos que enviei em um único PDF consolidado, ordenando por numeração e gerando um link de download para mim."*
+> *"Junte todos os arquivos PDF que enviei em um único documento consolidado, aplicando ordenação numérica natural e gerando um sumário clicável para download."*
 
-O ChatGPT executará o ambiente Python dele em sandbox, unirá os documentos e disponibilizará o botão de download direto na conversa.
+O ChatGPT executará o ambiente em sandbox dele utilizando a mesma lógica de ordenação e geração de sumário, disponibilizando o botão de download direto na conversa.
 
 ### 3. Em Pipelines de Automação e Agentes (Function Calling / MCP)
-Você pode expor o script `merge_pdfs.py` como uma ferramenta (tool) para agentes:
-- **Entrada:** Caminho do diretório ou lista de caminhos dos arquivos PDF.
-- **Processamento:** Ordenação natural, junção contínua e injeção de sumário via PyMuPDF.
-- **Saída:** Caminho do arquivo consolidado (`.pdf`) pronto para ser enviado ou arquivado.
+A classe e a lógica do `unificador_desktop.py` (usando PyMuPDF) podem ser facilmente reaproveitadas como uma ferramenta (*tool*) para agentes:
+- **Entrada:** Lista de caminhos de arquivos PDF ou caminho da pasta.
+- **Processamento:** Ordenação natural, merge sequencial e injeção de sumário via PyMuPDF.
+- **Saída:** Arquivo consolidado (`.pdf`) salvo e otimizado no disco.
 
 ---
 
@@ -113,9 +102,9 @@ Você pode expor o script `merge_pdfs.py` como uma ferramenta (tool) para agente
 
 ```text
 ├── unificador_pdf.html     # Web App completo (HTML5 + CSS3 + pdf-lib)
-├── unificador_desktop.py   # Aplicativo Desktop nativo com interface Tkinter
-├── merge_pdfs.py           # Script Python para automação direta via terminal
-└── README.md               # Documentação do projeto
+├── unificador_desktop.py   # Aplicativo Desktop nativo com interface Tkinter + PyMuPDF
+├── .gitignore              # Protege arquivos *.pdf de serem commitados por engano
+└── README.md               # Documentação completa do projeto
 ```
 
 ---
@@ -125,9 +114,9 @@ Você pode expor o script `merge_pdfs.py` como uma ferramenta (tool) para agente
 - **Interface Web:**
   - [PDF-Lib](https://pdf-lib.js.org/) – Manipulação e junção de PDFs direto no navegador.
   - HTML5, CSS3 moderno (Flexbox, CSS Variables) e JavaScript puro (Vanilla JS).
-- **Interface Desktop e Scripts:**
+- **Interface Desktop:**
   - [PyMuPDF (fitz)](https://pymupdf.readthedocs.io/) – Uma das bibliotecas mais rápidas do mercado para processamento de PDFs.
-  - [Tkinter](https://docs.python.org/3/library/tkinter.html) – Biblioteca padrão de interface gráfica do Python.
+  - [Tkinter](https://docs.python.org/3/library/tkinter.html) – Biblioteca nativa de interface gráfica do Python.
 
 ---
 
@@ -140,4 +129,4 @@ Você pode expor o script `merge_pdfs.py` como uma ferramenta (tool) para agente
 
 ## 📄 Licença
 
-Distribuído sob a licença **MIT**. Consulte o arquivo `LICENSE` para obter mais informações.
+Distribuído sob a licença **MIT**.
