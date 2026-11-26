@@ -81,6 +81,34 @@ Você pode editar a lista de arquivos e o nome de saída diretamente no script `
 
 ---
 
+## 🤖 Uso com Assistentes de IA (Claude, ChatGPT & Agentes de Código)
+
+Se você utiliza **Claude (Claude Code, Desktop ou API)**, **ChatGPT (Code Interpreter / Advanced Data Analysis)** ou agentes autônomos, você pode delegar a unificação e curadoria de PDFs diretamente para eles.
+
+### 1. Com o Claude (Claude Code / Agentes de Terminal)
+O Claude pode inspecionar o diretório, detectar os PDFs automaticamente e executar a unificação em um único comando:
+
+**Exemplo de prompt para o Claude:**
+> *"Leia todos os PDFs nesta pasta, organize-os em ordem cronológica/numérica dos aditivos e execute o script `merge_pdfs.py` para consolidar tudo com marcadores de sumário no arquivo final."*
+
+O Claude lerá a estrutura dos arquivos, ajustará os nomes dos marcadores se necessário e rodará a execução localmente sem enviar documentos para fora da sua máquina.
+
+### 2. Com o ChatGPT (Code Interpreter / Análise de Dados)
+Ao subir múltiplos PDFs para uma conversa no ChatGPT com o recurso de análise de código ativado:
+
+**Exemplo de prompt para o ChatGPT:**
+> *"Use o script `merge_pdfs.py` (ou a biblioteca PyMuPDF/pypdf) para juntar todos os arquivos que enviei em um único PDF consolidado, ordenando por numeração e gerando um link de download para mim."*
+
+O ChatGPT executará o ambiente Python dele em sandbox, unirá os documentos e disponibilizará o botão de download direto na conversa.
+
+### 3. Em Pipelines de Automação e Agentes (Function Calling / MCP)
+Você pode expor o script `merge_pdfs.py` como uma ferramenta (tool) para agentes:
+- **Entrada:** Caminho do diretório ou lista de caminhos dos arquivos PDF.
+- **Processamento:** Ordenação natural, junção contínua e injeção de sumário via PyMuPDF.
+- **Saída:** Caminho do arquivo consolidado (`.pdf`) pronto para ser enviado ou arquivado.
+
+---
+
 ## 📂 Estrutura do Repositório
 
 ```text
